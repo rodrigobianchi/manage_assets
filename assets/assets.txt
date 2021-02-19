@@ -1,0 +1,78 @@
+mutation ($employee: EmployeeInput) {
+  saveEmployee(employeeInput: $employee) {
+    id
+    name
+    email
+    enrollment
+    gender
+  }
+}
+
+{
+  "employee": {
+    "name": "Rodrigo Luiz Bianchi",
+    "email": "rodrigo.bianchi@monitoratec.com.br",
+    "enrollment": "123456",
+    "gender": "MALE"
+  }
+}
+
+query {
+  findEmployeeByEmail(email:"rodrigo.bianchi@monitoratec.com.br") {
+    id
+    name
+    email
+    enrollment
+    gender
+  }
+}
+
+mutation ($asset: AssetInput) {
+  saveAsset(assetInput: $asset) {
+    name
+    serialNumber
+    maker
+    estimatedValue
+  }
+}
+
+{
+  "asset": {
+    "name": "Notebook",
+    "serialNumber": "123456",
+    "maker": "Dell",
+    "estimatedValue": 3000.00
+  }
+}
+
+query {
+  findAssetBySerialNumber(serialNumber:"123456") {
+    id
+    name
+    maker
+    serialNumber
+    estimatedValue
+  }
+}
+
+mutation ($loans: LoanInput) {
+  saveLoan(loanInput: $loans) {
+    employee {
+      name
+    }
+    assets {
+      name
+    }
+    loanDate
+  }
+}
+
+{
+  "loans": {
+    "employeeEmail": "rodrigo.bianchi@monitoratec.com.br",
+    "loanDate": "2021-01-21",
+    "serialNumberAsset": [
+      "123456"
+    ]
+  }
+}

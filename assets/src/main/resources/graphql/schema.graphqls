@@ -1,0 +1,79 @@
+type Employee {
+    id: String
+    name: String
+    email: String
+    enrollment: String
+    gender: Gender
+}
+
+type Asset {
+    id: String
+    name: String
+    serialNumber: String
+    maker: String
+    estimatedValue: BigDecimal
+}
+
+type Loan {
+    id: String
+    loanDate: Date
+    employee: Employee
+    assets: [Asset]
+}
+
+type User {
+    id: String
+    username: String
+    password: String
+}
+
+enum Gender {
+    MALE, FEMALE
+}
+
+input EmployeeInput {
+    id: String
+    name: String
+    email: String
+    enrollment: String
+    gender: Gender
+}
+
+input AssetInput {
+    id: String
+    name: String
+    serialNumber: String
+    maker: String
+    estimatedValue: BigDecimal
+}
+
+input LoanInput {
+    name: String
+    loanDate: String
+    employeeEmail: String
+    serialNumberAsset: [String]
+}
+
+input UserInput {
+    username: String
+    password: String
+}
+
+type Query {
+    findEmployeeById(employeeId: String): Employee
+    findAllEmployees(orderBy: String): [Employee]
+    findAssetById(assetId: String): Asset
+    findAllAssets(orderBy: String): [Asset]
+}
+
+type Mutation {
+    saveUser(userInput: UserInput): User
+    saveEmployee(employeeInput: EmployeeInput): Employee
+    saveAsset(assetInput: AssetInput): Asset
+    saveLoan(loanInput: LoanInput): Loan
+    deleteEmployee(employeeId: String): Boolean
+    deleteAsset(assetId: String): Boolean
+}
+
+scalar BigDecimal
+scalar Date

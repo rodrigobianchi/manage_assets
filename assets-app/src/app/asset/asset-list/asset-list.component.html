@@ -1,0 +1,81 @@
+<h3 class="mt-4">Search Asset</h3>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active"></li>
+</ol>
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div *ngIf="msgSuccess" class="alert alert-success" role="alert">
+                {{msgSuccess}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div *ngIf="msgError" class="alert alert-danger" role="alert">
+                {{msgError}}
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>SERIAL NUMBER</th>
+                        <th>MAKER</th>
+                        <th>ESTIMATED VALUE</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let asset of assets">
+                        <td>{{asset.name}}</td>
+                        <td>{{asset.serialNumber}}</td>
+                        <td>{{asset.maker}}</td>
+                        <td>{{asset.estimatedValue}}</td>
+                        <td>
+                            <button class="btn btn-primary" routerLink="/asset/form/{{asset.id}}">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            &nbsp;
+                            <button class="btn btn-danger" (click)="prepareDelete(asset)" data-toggle="modal"
+                                data-target="#modalDelete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <button type="button" class="btn btn-warning" [routerLink]="['/asset/form']"><i class="fa fa-plus"></i> New Asset
+            </button>
+        </div>
+    </div>
+
+    <div id="modalDelete" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Confim</h4>
+                </div>
+                <div class="modal-body" *ngIf="assetSelected">
+                    Delete asset register {{assetSelected.name}}?
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-success" data-dismiss="modal" (click)="deleteAsset()">Yes</button>
+                    <button class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,3 @@
-# manage_assets
+# monitora-assets
+
+Monitora's asset management system

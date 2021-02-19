@@ -1,0 +1,98 @@
+<h3 class="mt-4">{{asset.id ? 'Edit Asset' : 'Register Asset'}}</h3>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active"></li>
+</ol>
+<div class="container">
+    <form #assetForm="ngForm" (ngSubmit)="onSubmit(); assetForm.reset();">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div *ngIf="showMsgSuccess" class="alert alert-success" role="alert">Asset successfully registered
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div *ngFor="let erro of errors" class="alert alert-danger" role="alert">
+                    {{erro}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Equipament Name: *</label>
+                    <input type="text" maxlength="100" required class="form-control" #name="ngModel" name="name"
+                        [(ngModel)]="asset.name" />
+                </div>
+                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                    <div *ngIf="name.errors.required">
+                        Equipament Name is required
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Serial Number: *</label>
+                    <input type="text" maxlength="10" required class="form-control" #serialNumber="ngModel"
+                        name="serialNumber" [(ngModel)]="asset.serialNumber" />
+                </div>
+                <div *ngIf="serialNumber.invalid && (serialNumber.dirty || serialNumber.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="serialNumber.errors.required">
+                        Serial Number is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Maker: *</label>
+                    <input type="text" maxlength="100" required class="form-control" #maker="ngModel" name="maker"
+                        [(ngModel)]="asset.maker" />
+                </div>
+                <div *ngIf="maker.invalid && (maker.dirty || maker.touched)" class="alert alert-danger">
+                    <div *ngIf="maker.errors.required">
+                        Maker is required
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Estimated Value: *</label>
+                    <input type="text" (change)="asset.estimatedValue=currencyInputChanged($event)"
+                        maxlength="100" required class="form-control" #estimatedValue="ngModel" name="estimatedValue"
+                        [(ngModel)]="asset.estimatedValue" pattern="^\d+(?:.\d{3})*\,\d{2}$" />
+                </div>
+                <div *ngIf="estimatedValue.invalid && (estimatedValue.dirty || estimatedValue.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="estimatedValue.errors.required">
+                        Estimated Value is required
+                    </div>
+                    <div *ngIf="estimatedValue.invalid">
+                        Invalid Estimated Value
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="md-col-3">
+                <button type="submit" [disabled]="assetForm.form.invalid" class="btn btn-success" *ngIf="!asset.id">
+                    <i class="fa fa-save"></i> Register
+                </button>
+
+                <button type="submit" [disabled]="assetForm.form.invalid" class="btn btn-primary" *ngIf="asset.id">
+                    <i class="fa fa-sync-alt"></i> Update
+                </button>
+
+                <button type="submit" class="btn btn-danger ml-1" (click)="returnSearch()">
+                    <i class="fa fa-arrow-alt-circle-left"></i> Return
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

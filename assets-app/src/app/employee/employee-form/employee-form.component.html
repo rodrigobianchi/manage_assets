@@ -1,0 +1,103 @@
+<h3 class="mt-4">{{employee.id ? 'Edit Employee' : 'Register Employee'}}</h3>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active"></li>
+</ol>
+<div class="container">
+    <form #employeeForm="ngForm" (ngSubmit)="onSubmit(); employeeForm.reset();">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div *ngIf="showMsgSuccess" class="alert alert-success" role="alert">Employee successfully registered
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div *ngFor="let erro of errors" class="alert alert-danger" role="alert">
+                    {{erro}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Full Name: *</label>
+                    <input type="text" maxlength="100" required class="form-control" #name="ngModel" name="name"
+                        [(ngModel)]="employee.name" />
+                </div>
+                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                    <div *ngIf="name.errors.required">
+                        Full Name is required
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Enrollment: *</label>
+                    <input type="text" maxlength="10" required class="form-control" #enrollment="ngModel"
+                        name="enrollment" [(ngModel)]="employee.enrollment" />
+                </div>
+                <div *ngIf="enrollment.invalid && (enrollment.dirty || enrollment.touched)" class="alert alert-danger">
+                    <div *ngIf="enrollment.errors.required">
+                        Enrollment is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>E-mail: *</label>
+                    <input type="text" maxlength="100" required class="form-control" #email="ngModel" name="email"
+                        [(ngModel)]="employee.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" />
+                </div>
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                    <div *ngIf="email.errors.required">
+                        E-mail is required
+                    </div>
+                    <div *ngIf="email.invalid">
+                        Invalid E-mail
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Gender: *</label>
+                    <div class="form-control">
+                        <label for="male">Male</label>
+                        <input id="male" type="radio" class="col-sm-2" #gender="ngModel" value="MALE" name="gender"
+                            [(ngModel)]="employee.gender" required>
+                        <label for="female">Female</label>
+                        <input id="female" type="radio" class="col-sm-2" #gender="ngModel" value="FEMALE" name="gender"
+                            [(ngModel)]="employee.gender" required>
+                    </div>
+                </div>
+                <div *ngIf="gender.invalid && (gender.dirty || gender.touched)" class="alert alert-danger">
+                    <div *ngIf="gender.errors.required">
+                        Gender is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="md-col-3">
+                <button type="submit" [disabled]="employeeForm.form.invalid" class="btn btn-success"
+                    *ngIf="!employee.id">
+                    <i class="fa fa-save"></i> Register
+                </button>
+
+                <button type="submit" [disabled]="employeeForm.form.invalid" class="btn btn-primary"
+                    *ngIf="employee.id">
+                    <i class="fa fa-sync-alt"></i> Update
+                </button>
+
+                <button type="submit" class="btn btn-danger ml-1" (click)="returnSearch()">
+                    <i class="fa fa-arrow-alt-circle-left"></i> Return
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
